@@ -11,6 +11,7 @@
       <button type="button" class="btn" @click="showModal">
         Upload een nieuwe wet
       </button>
+        <button @click="redirectToXmlData">View XML Data</button>
     </div>
   </div>
   <UploadModal v-show="isModalVisible" @close="closeModal" />
@@ -34,6 +35,9 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     },
+    redirectToXmlData() {
+      this.$router.push({ name: 'XmlData' });
+    }
   },
   data() {
     return {
