@@ -1,5 +1,4 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
@@ -12,7 +11,12 @@ export default {
     HelloWorld
   }
 }
+
+
+
 </script>
+
+<style src="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
 
 <style>
 #app {
