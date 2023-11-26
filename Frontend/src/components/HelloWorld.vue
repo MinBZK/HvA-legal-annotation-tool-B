@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; overflow: hidden">
+  <div style="width: 100%; overflow: hidden; padding-left: 5%;">
     <div style="width: 50%; float:left;">
       <h3>Annotation tools</h3>
       <p>
@@ -8,8 +8,8 @@
       </p>
     </div>
     <div style="width: 40%; overflow: hidden; text-align: center; justify-content: center; height: 100%;">
-      <button type="button" class="btn" @click="showModal">
-        Upload een nieuwe wet
+      <button type="button" class="btn btn-primary" @click="showModal">
+        <font-awesome-icon icon="fa-solid fa-folder" /> Upload een nieuwe wet
       </button>
     </div>
   </div>

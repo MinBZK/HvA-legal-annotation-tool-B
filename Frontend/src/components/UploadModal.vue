@@ -1,20 +1,20 @@
 <template>
-  <div class="modal-backdrop">
-    <div class="modal">
-      <header class="modal-header">
-        <slot name="header"> Upload een XML </slot>
-        <button type="button" class="btn-close" @click="close">x</button>
+  <div class="modal-backdropCustom">
+    <div class="modalCustom">
+      <header class="modal-headerCustom">
+        <slot name="headerCustom"> Upload een XML </slot>
+        <button type="button" class="btn-close" @click="close"></button>
       </header>
 
-      <section class="modal-body">
-        <slot name="body">
+      <section class="modal-bodyCustom">
+        <slot name="bodyCustom">
           <input type="file" @change="uploadFile" ref="file" accept=".xml"/>
         </slot>
       </section>
 
-      <footer class="modal-footer">
-        <slot name="footer" id="feedback">{{feedback}}</slot>
-        <button type="button" class="btn-green" @click="submitFile">
+      <footer class="modal-footerCustom">
+        <slot name="footerCustom" id="feedback">{{feedback}}</slot>
+        <button type="button" class="btn btn-primary" @click="submitFile">
           Upload
         </button>
       </footer>
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style>
-.modal-backdrop {
+.modal-backdropCustom {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -67,7 +67,7 @@ export default {
   align-items: center;
 }
 
-.modal {
+.modalCustom {
   background: #ffffff;
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
@@ -75,31 +75,31 @@ export default {
   flex-direction: column;
 }
 
-.modal-header,
-.modal-footer {
+.modal-headerCustom,
+.modal-footerCustom {
   padding: 15px;
   display: flex;
 }
 
-.modal-header {
+.modal-headerCustom {
   position: relative;
   border-bottom: 1px solid #eeeeee;
   color: #4aae9b;
   justify-content: space-between;
 }
 
-.modal-footer {
+.modal-footerCustom {
   border-top: 1px solid #eeeeee;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-.modal-body {
+.modal-bodyCustom {
   position: relative;
   padding: 20px 10px;
 }
 
-.btn-close {
+.btn-closeCustom {
   position: absolute;
   top: 0;
   right: 0;
@@ -112,7 +112,7 @@ export default {
   background: transparent;
 }
 
-.btn-green {
+.btn-greenCustom {
   color: white;
   background: #4aae9b;
   border: 1px solid #4aae9b;

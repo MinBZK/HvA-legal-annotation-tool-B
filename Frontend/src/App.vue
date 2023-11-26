@@ -11,7 +11,12 @@ export default {
     HelloWorld
   }
 }
+
+
+
 </script>
+
+<style src="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
 
 <style>
 #app {
