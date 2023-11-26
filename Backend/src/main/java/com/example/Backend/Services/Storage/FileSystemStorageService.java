@@ -24,7 +24,6 @@ public class FileSystemStorageService implements StorageService {
 
         this.rootLocation = Paths.get(properties.getLocation());
     }
-
     public void store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
