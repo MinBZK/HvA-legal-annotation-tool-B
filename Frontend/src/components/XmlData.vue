@@ -19,7 +19,7 @@ export default {
   methods: {
     async fetchXMLData() {
       try {
-        const response = await axios.get('http://localhost:8080/get-xml', { responseType: 'text' });
+        const response = await axios.get(`${process.env.VUE_APP_SERVERROOT}/get-xml`, { responseType: 'text' });
         this.xmlData = response.data;
       } catch (error) {
         console.error('Error fetching XML data', error);
