@@ -90,7 +90,6 @@
           </li>
         </ul>
       </div>
-      <input type="color" id="labelColor" name="labelColor" v-model="color" />
       <div class="modal-footer">
         <ul>
           <li>
@@ -113,7 +112,7 @@
             false-value="no"
           />
           <label for="type1"
-            >Pas toe voor elk keer dat "id" voorkomt in het document.</label
+            >Pas toe voor elk keer dat "{{ word }}" voorkomt in het document.</label
           >
         </li>
       </div>
@@ -139,21 +138,21 @@ export default {
   components: {},
   methods: {
     close() {
+      this.description="";
       this.$emit("close");
     },
     submitAnnotation() {
       this.feedback = "";
-      console.log(this.multi == "yes");
       let data = { xmlId: this.xmlId };
       if (this.multi == "yes") {
         data["multiAnnotations"] = [{
-          color: this.color,
+          color: "#FFFFFF",
           description: this.description,
           word: this.word,
         }];
       } else {
         data["singleAnnotations"] = [{
-          color: this.color,
+          color: "#FFFFFF",
           description: this.description,
           startIndex: this.startIndex,
           endIndex: this.endIndex,
@@ -187,7 +186,6 @@ export default {
   },
   data() {
     return {
-      color: "",
       description: "",
       multi: true,
       feedback: "",
