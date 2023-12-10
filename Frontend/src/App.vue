@@ -3,18 +3,21 @@
         <img alt="Vue logo" src="./assets/logo.png">
         <HelloWorld></Helloworld>
         <button @click="openModal">Open</button>
-        <DemoModal v-show="isModalVisible" @close="closeModal"/>
+        <!-- <DemoModal v-show="isModalVisible" @close="closeModal"/> -->
+        <tempEdit></tempEdit>
     </div>
 </template>
 <script>
     import HelloWorld from './components/HelloWorld.vue';
-    import DemoModal from './components/anno_edit/DemoModal.vue';
+    // import DemoModal from './components/anno_edit/DemoModal.vue';
+    import tempEdit from './components/tempEdit.vue';
 
     export default {
         name: 'App',
         components: {
-            DemoModal,
+            // DemoModal,
             HelloWorld,
+            tempEdit
         },
         data() {
             return {
