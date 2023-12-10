@@ -158,13 +158,12 @@ import axios from "axios";
         word: String,
         startIndex: Number,
         endIndex: Number,
-    }
+    },
     data() {
       return {
         anno_types: null,
         anno_relations: null,
         selectedWord: "",
-        description: "",
         saveMessage: false,
         description: "",
         multi: true,
