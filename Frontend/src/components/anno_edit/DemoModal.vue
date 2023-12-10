@@ -1,10 +1,10 @@
 <template>
   <div class="modal-container">
     <div class="modal-inner">
-      <h1>Defineer " {{selectedWord}} "</h1>
+      <h1>Defineer {{ word }}</h1>
       <div class="modal-column-list">
         <ul>
-          <h3 class="modal-subtitle">Type: </h3>
+          <h3 class="modal-subtitle">Type:</h3>
           <li>
             <input type="radio" name="anno_types" value="Rechtssubject" id="radiotype1" />
             <label class="type1" for="type1">Rechtssubject</label>
@@ -111,35 +111,54 @@
       <div>
         <ul>
           <li>
-            <h3>Definitie: </h3>
+            <h3>Definitie:</h3>
           </li>
           <li class="textarea">
-            <textarea class="form-control" v-model="description" placeholder="Een korte beschrijving..."/>
+            <textarea
+              class="description"
+              v-model="description"
+              placeholder="Een korte beschrijving..."
+            />
           </li>
         </ul>
         <li>
-          <input type="checkbox" name="description-box">
-          <label for="type1">Pas toe voor elk keer dat " {{selectedWord}} " voorkomt in het document.</label>
+          <input
+            type="checkbox"
+            name="description-box"
+            v-model="multi"
+            true-value="yes"
+            false-value="no"
+          />
+          <label for="type1"
+            >Pas toe voor elk keer dat "{{ word }}" voorkomt in het document.</label
+          >
         </li>
       </div>
+      {{ feedback }}
       <div class="modal-btns">
         <ul>
           <li>
-            <p class="save-message" v-show="saveMessage">Wijzigingen zijn opgeslagen.</p>
-          </li>
-          <li>
-            <button class="submit-btn" @click="save">Toepassen</button>
+            <button class="submit-btn" @click="submitAnnotation">
+              Toepassen
+            </button>
             <button class="close-btn" @click="close">Annuleren</button>
           </li>
         </ul>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
   export default {
+    props: {
+        text: String,
+        xmlId: Number,
+        word: String,
+        startIndex: Number,
+        endIndex: Number,
+    }
     data() {
       return {
         anno_types: null,
@@ -147,6 +166,9 @@
         selectedWord: "",
         description: "",
         saveMessage: false,
+        description: "",
+        multi: true,
+        feedback: "",
       };
     },
     methods: {
@@ -169,7 +191,42 @@
         checkboxes.forEach(checkbox => {
           checkbox.checked = checked.includes((parseInt(checkbox.value))) ;
         });
+      },
+      submitAnnotation() {
+      this.feedback = "";
+      let data = { xmlId: this.xmlId };
+      if (this.multi == "yes") {
+        data["multiAnnotations"] = [{
+          color: "#FFFFFF",
+          description: this.description,
+          word: this.word,
+        }];
+      } else {
+        data["singleAnnotations"] = [{
+          color: "#FFFFFF",
+          description: this.description,
+          startIndex: this.startIndex,
+          endIndex: this.endIndex,
+        }];
       }
+
+      axios
+        .post(`${process.env.VUE_APP_SERVERROOT}/annotations/add`, data)
+        .then((res) => {
+          if (res.status == 200) {
+            this.feedback = "Annotatie is aangepast";
+          } else {
+            this.feedback =
+              "Er is iets mis gegaan tijdens het aanpassen van de annotatie probeer het later opnieuw";
+          }
+        })
+        .catch(() => {
+          this.feedback =
+            "Er is iets mis gegaan tijdens het aanpassen van de annotatie probeer het later opnieuw";
+        });
+
+      console.log(data);
+    }
     },
   };
 
