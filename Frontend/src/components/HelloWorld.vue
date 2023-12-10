@@ -12,6 +12,7 @@
         <font-awesome-icon icon="fa-solid fa-folder" /> Upload een nieuwe wet
       </button>
         <button @click="redirectToXmlData">View XML Data</button>
+      <button @click="redirectToEditXML">Edit XML Data</button>
     </div>
   </div>
   <UploadModal v-show="isModalVisible" @close="closeModal" />
@@ -37,7 +38,10 @@ export default {
     },
     redirectToXmlData() {
       this.$router.push({ name: 'XmlData' });
-    }
+    },
+    redirectToEditXML(){
+      this.$router.push({name: 'DemoModal'});
+    },
   },
   data() {
     return {
