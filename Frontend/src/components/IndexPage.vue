@@ -2,37 +2,37 @@
   <div class="container">
     <UploadModal v-show="isModalVisible" @close="closeModal" />
     <div class="header-container d-flex align-items-center mb-3">
-      <h2 class="me-3">Alle Bestanden</h2>
+      <h2 class="h4 me-3">Alle Bestanden</h2>
       <input v-model="search" class="form-control me-3" placeholder="Zoeken op naam" />
-      <button type="button" class="btn btn-primary" @click="showModal">
+      <button type="button" class="btn btn-primary btn-sm" @click="showModal">
         Upload een andere wet
       </button>
-      <button @click="exportAllFiles" class="btn btn-dark">Alles exporteren</button>
-      <button @click="reloadFiles" class="btn btn-success">Herladen</button>
+      <button @click="exportAllFiles" class="btn btn-dark btn-sm">Alles exporteren</button>
+      <button @click="reloadFiles" class="btn btn-success btn-sm">Herladen</button>
     </div>
 
     <table class="table">
       <thead>
         <tr>
           <th scope="col"></th>
-          <th scope="col">Title</th>
-          <th scope="col">Bestandnaam</th>
-          <th scope="col"></th>
+          <th scope="col" class="h6">Title</th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(fileName, index) in xmlFiles" :key="index">
+        <tr v-for="(fileName, index) in filteredFiles" :key="index">
           <td><input type="checkbox" v-model="selectedFiles" :value="file" class="form-check-input" /></td>
-          <td>{{ fileName }}</td>
-          <td>{{ fileName }}</td>
-          <td><button @click="viewXmlData(fileName)" class="btn btn-primary">Bekijk tekst</button></td>
-          <td><button @click="exportFile(fileName)" class="btn btn-dark">Exporteer</button></td>
+          <td>{{ getFileNameWithoutExtension(fileName) }}</td>
+          <td>
+            <button @click="viewXmlData(fileName)" class="btn btn-primary">Bekijk tekst</button>
+            <button @click="exportFile(fileName)" class="btn btn-dark">Exporteer</button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -47,8 +47,8 @@ export default {
   },
   computed: {
     filteredFiles() {
-      return this.files.filter((file) =>
-        file.name.toLowerCase().includes(this.search.toLowerCase())
+      return this.xmlFiles.filter((fileName) =>
+        fileName !== '.gitkeep' && fileName.toLowerCase().includes(this.search.toLowerCase())
       );
     },
   },
@@ -87,13 +87,18 @@ export default {
       }
     },
 
-    viewXmlData(file) {
-      console.log(`Clicked on file: ${file.name}`);
-      this.$router.push({ name: 'XmlData' });
+    viewXmlData(fileName) {
+      console.log(`Clicked on file: ${fileName}`);
+      this.$router.push({ name: 'XmlData', params: { fileName } });
     },
 
     async reloadFiles() {
       await this.fetchXmlFiles();
+    },
+
+    getFileNameWithoutExtension(fileName) {
+      // Remove the file extension from the filename
+      return fileName.replace(/\.[^/.]+$/, "");
     },
   },
 };
