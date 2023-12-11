@@ -13,6 +13,8 @@
       </button>
         <button @click="redirectToXmlData">View XML Data</button>
       <button @click="redirectToEditXML">Edit XML Data</button>
+      <button @click="redirectToIndexPage">All files</button>
+
     </div>
   </div>
   <UploadModal v-show="isModalVisible" @close="closeModal" />
@@ -41,6 +43,9 @@ export default {
     },
     redirectToEditXML(){
       this.$router.push({name: 'DemoModal'});
+    },
+    redirectToIndexPage(){
+      this.$router.push({name: 'IndexPage'});
     },
   },
   data() {

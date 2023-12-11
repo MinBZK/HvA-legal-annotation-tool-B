@@ -6,11 +6,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class FileSystemStorageService implements StorageService {
@@ -41,6 +45,18 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to store file.", e);
         }
     }
+
+    public List<String> getAllFileNames() {
+    try {
+        return Files.walk(rootLocation, 1)
+            .filter(path -> !path.equals(rootLocation))
+            .map(rootLocation::relativize)
+            .map(Path::toString)
+            .collect(Collectors.toList());
+    } catch (IOException e) {
+        throw new StorageException("Failed to retrieve file names", e);
+    }
+}
 
     @Override
     public void init() {
