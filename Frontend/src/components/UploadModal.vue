@@ -43,7 +43,7 @@ export default {
       formData.append("file", this.XML);
       const headers = { "Content-Type": "multipart/form-data" };
       axios
-        .post("http://localhost:8080/files/upload", formData, { headers })
+        .post(`${process.env.VUE_APP_SERVERROOT}/files/upload`, formData, { headers })
         .then((res) => {
           console.log(res.data.files);
           console.log(res.status);

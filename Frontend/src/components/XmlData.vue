@@ -1,34 +1,84 @@
 <template>
   <div class="xml-container">
     <h2>Wet tekst annotatie:</h2>
-    <pre>{{ xmlData }}</pre>
+    <pre>
+      <p @click="callThing">
+      {{ xmlData }}</p>
+    </pre>
     <button class="terug-button">terug</button>
   </div>
+  <DemoModal v-show="isEditing" @close="closeModal"  :word="word" :startIndex="startIndex" :endIndex="endIndex" :xmlId="xmlId"/>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from "axios";
+import DemoModal from "./anno_edit/DemoModal.vue";
 
 export default {
+  components: {
+    DemoModal
+  },
   data() {
     return {
-      xmlData: '',
+      xmlData: "",
+      word: null,
+      startIndex: 0,
+      endIndex: 0,
+      xmlId: 0,
+      isEditing: false,
     };
   },
   methods: {
     async fetchXMLData() {
       try {
-        const response = await axios.get('http://localhost:8080/get-xml', { responseType: 'text' });
+        const response = await axios.get(
+          `${process.env.VUE_APP_SERVERROOT}/get-xml`,
+          { responseType: "text" }
+        );
         this.xmlData = response.data;
       } catch (error) {
-        console.error('Error fetching XML data', error);
+        console.error("Error fetching XML data", error);
       }
-    }
+    },
+    callThing() {
+      console.log("called");
+      let s = window.getSelection();
+      var range = s.getRangeAt(0);
+      var node = s.anchorNode;
+
+      // Find starting point
+      while (range.toString().indexOf(" ") != 0) {
+        range.setStart(node, range.startOffset - 1);
+      }
+      range.setStart(node, range.startOffset + 1);
+
+      // Find ending point
+      do {
+        range.setEnd(node, range.endOffset + 1);
+      } while (
+        range.toString().indexOf(" ") == -1 &&
+        range.toString().trim() != ""
+      );
+
+      // Alert result
+      var str = range.toString().trim().replace("\n", "");
+      
+      this.word = str;
+      this.startIndex = range.startOffset;
+      this.endIndex = range.endOffset;
+      this.xmlId = 1;
+      this.showModal();
+    },
+    showModal() {
+      this.isEditing = true;
+    },
+    closeModal() {
+      this.isEditing = false;
+    },
   },
   mounted() {
     this.fetchXMLData();
-  }
+  },
 };
 </script>
 
@@ -72,4 +122,3 @@ pre {
   background-color: #cc0000; /* Darker red on hover */
 }
 </style>
-

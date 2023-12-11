@@ -1,17 +1,17 @@
 package com.example.Backend.Controllers;
 
-import com.example.Backend.Services.Storage.FileSystemStorageService;
 import com.example.Backend.Services.Storage.StorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 @RestController
 public class XmlController {
@@ -19,11 +19,8 @@ public class XmlController {
     @Autowired
     private StorageProperties storageProperties;
 
-    // Autowire the storage service
-    @Autowired
-    private FileSystemStorageService storageService;
-
     @GetMapping("/get-xml")
+    @CrossOrigin("*")
     public ResponseEntity<Resource> getXmlFile() {
         try {
             Path path = Paths.get(storageProperties.getLocation()).resolve("example.xml");
@@ -37,11 +34,5 @@ public class XmlController {
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());
         }
-    }
-
-    @GetMapping("/get-xmls")
-    public ResponseEntity<List<String>> getXmlFiles() {
-        List<String> fileNames = storageService.getAllFileNames();
-        return ResponseEntity.ok().body(fileNames);
     }
 }

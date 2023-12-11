@@ -11,8 +11,8 @@
       <button type="button" class="btn btn-primary" @click="showModal">
         <font-awesome-icon icon="fa-solid fa-folder" /> Upload een nieuwe wet
       </button>
-        <router-link to="/index">Go to Index Page</router-link>
-        <button @click="redirectToIndex">Go to IndexPage</button>
+        <button @click="redirectToXmlData">View XML Data</button>
+      <button @click="redirectToEditXML">Edit XML Data</button>
     </div>
   </div>
   <UploadModal v-show="isModalVisible" @close="closeModal" />
@@ -39,9 +39,9 @@ export default {
     redirectToXmlData() {
       this.$router.push({ name: 'XmlData' });
     },
-    redirectToIndex() {
-      this.$router.push({ name: 'IndexPage' });
-    }
+    redirectToEditXML(){
+      this.$router.push({name: 'DemoModal'});
+    },
   },
   data() {
     return {
