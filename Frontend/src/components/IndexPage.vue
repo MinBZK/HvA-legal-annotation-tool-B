@@ -5,9 +5,10 @@
       <h2 class="me-3">Alle Bestanden</h2>
       <input v-model="search" class="form-control me-3" placeholder="Zoeken op naam" />
       <button type="button" class="btn btn-primary" @click="showModal">
-        Upload een nieuwe wet
+        Upload een andere wet
       </button>
       <button @click="exportAllFiles" class="btn btn-dark">Alles exporteren</button>
+      <button @click="reloadFiles" class="btn btn-success">Herladen</button>
     </div>
 
     <table class="table">
@@ -21,22 +22,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(file, index) in filteredFiles" :key="index">
+        <tr v-for="(fileName, index) in xmlFiles" :key="index">
           <td><input type="checkbox" v-model="selectedFiles" :value="file" class="form-check-input" /></td>
-          <td>{{ file.name }}</td>
-          <td>{{ file.fullName }}</td>
-          <td><button @click="viewXmlData(file)" class="btn btn-primary">Bekijk tekst</button></td>
-          <td><button @click="exportFile(file)" class="btn btn-dark">Exporteer</button></td>
+          <td>{{ fileName }}</td>
+          <td>{{ fileName }}</td>
+          <td><button @click="viewXmlData(fileName)" class="btn btn-primary">Bekijk tekst</button></td>
+          <td><button @click="exportFile(fileName)" class="btn btn-dark">Exporteer</button></td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+
 <script>
 import axios from 'axios'
 export default {
   data() {
     return {
+      xmlFiles: [],
       files: [],
       selectedFiles: [],
       search: "",
@@ -50,41 +53,16 @@ export default {
     },
   },
 
+  mounted() {
+    this.fetchXmlFiles(); 
+  },
+
   methods: {
 
 
     viewText(file) {
       console.log(`View text for file: ${file.name}`);
     },
-
-    // async importFiles() {
-    //   const input = document.createElement('input');
-    //   input.type = 'file';
-    //   input.accept = '.xml';
-    //   input.multiple = true;
-
-    //   input.addEventListener('change', async (event) => {
-    //     const files = event.target.files;
-
-    //     if (files && files.length > 0) {
-    //       for (let i = 0; i < files.length; i++) {
-    //         const file = files[i];
-
-    //         const formData = new FormData();
-    //         formData.append('file', file);
-
-    //         try {
-    //           await axios.post('http://localhost:8080/files/upload', formData);
-    //           await this.fetchFilesFromBackend();
-    //         } catch (error) {
-    //           console.error('Error uploading file:', error);
-    //         }
-    //       }
-    //     }
-    //   });
-
-    //   input.click();
-    // },
 
     exportFiles() {
       if (this.selectedFiles.length === 0) {
@@ -100,21 +78,23 @@ export default {
       }
     },
 
+    async fetchXmlFiles() {
+      try {
+        const response = await axios.get('http://localhost:8080/get-xmls');
+        this.xmlFiles = response.data;
+      } catch (error) {
+        console.error('Error fetching XML files from backend:', error);
+      }
+    },
+
     viewXmlData(file) {
       console.log(`Clicked on file: ${file.name}`);
       this.$router.push({ name: 'XmlData' });
     },
-    async fetchFilesFromBackend() {
-      try {
-        const response = await axios.get('http://localhost:8080/get-xmls');
-        this.files = response.data;
-      } catch (error) {
-        console.error('Error fetching files from backend:', error);
-      }
+
+    async reloadFiles() {
+      await this.fetchXmlFiles();
     },
-    // importFilesModal() {
-    //   this.$refs.uploadModal.show();
-    // }
   },
 };
 </script>
