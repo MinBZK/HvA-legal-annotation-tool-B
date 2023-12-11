@@ -2,13 +2,13 @@
   <div class="container">
     <UploadModal v-show="isModalVisible" @close="closeModal" />
     <div class="header-container d-flex align-items-center mb-3">
-      <h2 class="h4 me-3">Alle Bestanden</h2>
-      <input v-model="search" class="form-control me-3" placeholder="Zoeken op naam" />
-      <button type="button" class="btn btn-primary btn-sm" @click="showModal">
+      <h2 class="h4 me-3 mr-2">Alle Bestanden</h2>
+      <input v-model="search" class="form-control me-3 mr-2" placeholder="Zoeken op naam" />
+      <button type="button" class="btn btn-primary btn-sm mr-2" @click="showModal">
         Upload een andere wet
       </button>
-      <button @click="exportAllFiles" class="btn btn-dark btn-sm">Alles exporteren</button>
-      <button @click="reloadFiles" class="btn btn-success btn-sm">Herladen</button>
+      <button @click="exportAllFiles" class="btn btn-dark btn-sm mr-2">Alles exporteren</button>
+      <button @click="reloadFiles" class="btn btn-success btn-sm mr-2">Herladen</button>
     </div>
 
     <table class="table">
@@ -24,8 +24,8 @@
           <td><input type="checkbox" v-model="selectedFiles" :value="file" class="form-check-input" /></td>
           <td>{{ getFileNameWithoutExtension(fileName) }}</td>
           <td>
-            <button @click="viewXmlData(fileName)" class="btn btn-primary">Bekijk tekst</button>
-            <button @click="exportFile(fileName)" class="btn btn-dark">Exporteer</button>
+            <button @click="viewXmlData(fileName)" class="btn btn-primary mr-2">Bekijk tekst</button>
+            <button class="btn btn-dark mr-2">Exporteer</button>
           </td>
         </tr>
       </tbody>
@@ -64,20 +64,6 @@ export default {
       console.log(`View text for file: ${file.name}`);
     },
 
-    exportFiles() {
-      if (this.selectedFiles.length === 0) {
-        alert("Please select at least one file to export.");
-        return;
-      }
-
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        const file = this.selectedFiles[i];
-        const dataURL = "data:text/xml;charset=utf-8," + encodeURIComponent(file.content);
-
-        window.open(dataURL, "_blank");
-      }
-    },
-
     async fetchXmlFiles() {
       try {
         const response = await axios.get('http://localhost:8080/get-xmls');
@@ -97,7 +83,6 @@ export default {
     },
 
     getFileNameWithoutExtension(fileName) {
-      // Remove the file extension from the filename
       return fileName.replace(/\.[^/.]+$/, "");
     },
   },
