@@ -41,6 +41,12 @@ public class XmlController {
         }
     }
 
+    /**
+     * Handles HTTP GET requests to retrieve a list of XML file names.
+     *
+     * @return A ResponseEntity containing the list of XML file names.
+     */
+
     @GetMapping("/get-xmls")
     @CrossOrigin("*")
     public ResponseEntity<List<String>> getXmlFiles() {
@@ -48,4 +54,3 @@ public class XmlController {
         return ResponseEntity.ok().body(fileNames);
     }
 }
-
