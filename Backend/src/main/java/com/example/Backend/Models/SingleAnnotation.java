@@ -5,10 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 @Entity
 public class SingleAnnotation extends Annotation {
     private int startIndex;
     private int endIndex;
+    private String word;
 
     public int getStartIndex() {
         return startIndex;
@@ -26,5 +30,11 @@ public class SingleAnnotation extends Annotation {
         this.endIndex = endIndex;
     }
 
+    public String getWord() {
+        return word;
+    }
 
+    public void setWord(String word) {
+        this.word = word;
+    }
 }

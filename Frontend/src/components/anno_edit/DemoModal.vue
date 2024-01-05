@@ -206,6 +206,7 @@ import axios from "axios";
           description: this.description,
           startIndex: this.startIndex,
           endIndex: this.endIndex,
+          word: this.word
         }];
       }
 
