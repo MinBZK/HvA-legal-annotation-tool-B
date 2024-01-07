@@ -14,6 +14,7 @@
         <button @click="redirectToXmlData">View XML Data</button>
       <button @click="redirectToEditXML">Edit XML Data</button>
       <button @click="redirectToIndexPage">All files</button>
+      <button @click="redirectToAnnotationList">All annotations</button>
 
     </div>
   </div>
@@ -46,6 +47,9 @@ export default {
     },
     redirectToIndexPage(){
       this.$router.push({name: 'IndexPage'});
+    },
+    redirectToAnnotationList(){
+      this.$router.push({name: "AnnotationListVue"})
     }
   },
   data() {
