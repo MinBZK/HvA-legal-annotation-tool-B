@@ -46,7 +46,7 @@ export default {
     },
     redirectToIndexPage(){
       this.$router.push({name: 'IndexPage'});
-    },
+    }
   },
   data() {
     return {

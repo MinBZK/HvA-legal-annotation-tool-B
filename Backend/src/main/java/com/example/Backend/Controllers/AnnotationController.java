@@ -75,6 +75,32 @@ public class AnnotationController {
         return xmlRepo.findById(id).get().getAnnotations();
     }
 
+    @GetMapping("/byxml/{id}/by-word/{word}/**")
+    @CrossOrigin("*")
+    public @ResponseBody Annotation getByIdAndWord(@PathVariable int id, @PathVariable String word) {
+        List<Annotation> annotations = this.getById(id);
+        for (Annotation i : annotations) {
+            if (i instanceof MultiAnnotation) {
+                if (((MultiAnnotation) i).getWord().equals(word))
+                    return i;
+            }
+        }
+        throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+    }
+
+    @GetMapping("byxml/{id}/by-index/{startindex}-{endindex}")
+    @CrossOrigin("*")
+    public @ResponseBody Annotation getByIdAndIndexes(@PathVariable int id, @PathVariable int startindex, @PathVariable int endindex) {
+        List<Annotation> annotations = this.getById(id);
+        for (Annotation i : annotations) {
+            if (i instanceof SingleAnnotation) {
+                if (((SingleAnnotation) i).getStartIndex() == startindex && ((SingleAnnotation) i).getEndIndex() == endindex)
+                    return i;
+            }
+        }
+        throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+    }
+
     @GetMapping("/")
     @CrossOrigin("*")
     public @ResponseBody Iterable<annotationWithForeignKey> get() {
