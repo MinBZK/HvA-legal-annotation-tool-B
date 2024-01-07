@@ -7,7 +7,16 @@
     </pre>
     <button class="terug-button">terug</button>
   </div>
-  <DemoModal v-show="isEditing" @close="closeModal"  :word="word" :startIndex="startIndex" :endIndex="endIndex" :xmlId="xmlId"/>
+  <DemoModal
+    ref="DemoModal"
+    v-show="isEditing"
+    @close="closeModal"
+    :word="word"
+    :startIndex="startIndex"
+    :endIndex="endIndex"
+    :xmlId="xmlId"
+    :existingDescription="existingDescription"
+  />
 </template>
 
 <script>
@@ -16,7 +25,7 @@ import DemoModal from "./anno_edit/DemoModal.vue";
 
 export default {
   components: {
-    DemoModal
+    DemoModal,
   },
   data() {
     return {
@@ -26,6 +35,7 @@ export default {
       endIndex: 0,
       xmlId: 0,
       isEditing: false,
+      existingDescription: "",
     };
   },
   methods: {
@@ -40,7 +50,7 @@ export default {
         console.error("Error fetching XML data", error);
       }
     },
-    callThing() {
+    async callThing() {
       console.log("called");
       let s = window.getSelection();
       var range = s.getRangeAt(0);
@@ -62,11 +72,20 @@ export default {
 
       // Alert result
       var str = range.toString().trim().replace("\n", "");
-      
+
       this.word = str;
       this.startIndex = range.startOffset;
       this.endIndex = range.endOffset;
       this.xmlId = 1;
+      let result = await this.getInfoOfWords(
+        this.xmlId,
+        this.startIndex,
+        this.endIndex,
+        this.word
+      );
+      if (result != null) {
+        this.$refs.DemoModal.fillData(result);
+      }
       this.showModal();
     },
     showModal() {
@@ -74,6 +93,31 @@ export default {
     },
     closeModal() {
       this.isEditing = false;
+    },
+    async getInfoOfWords(xml_id, startindex, endindex, word) {
+      return await axios
+        .get(
+          `${process.env.VUE_APP_SERVERROOT}/annotations/byxml/${xml_id}/by-index/${startindex}-${endindex}`
+        )
+        .then((data) => {
+          return data.data;
+        })
+        .catch(async (err) => {
+          if (err.response.status == 404) {
+            return await axios
+              .get(
+                `${process.env.VUE_APP_SERVERROOT}/annotations/byxml/${xml_id}/by-word/${word}`
+              )
+              .then((data) => {
+                return data.data;
+              })
+              .catch((err) => {
+                if (err.response.status == 404) {
+                  return null;
+                }
+              });
+          }
+        });
     },
   },
   mounted() {
