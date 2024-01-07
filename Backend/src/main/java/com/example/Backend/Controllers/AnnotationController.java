@@ -1,5 +1,6 @@
 package com.example.Backend.Controllers;
 
+import com.example.Backend.Models.Annotation;
 import com.example.Backend.Models.MultiAnnotation;
 import com.example.Backend.Models.SingleAnnotation;
 import com.example.Backend.Models.XML;
@@ -10,7 +11,10 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/annotations")
@@ -63,6 +67,34 @@ public class AnnotationController {
         }
         xmlRepo.save(xml);
         return "saved";
+    }
+
+    @GetMapping("/byxml/{id}")
+    public @ResponseBody List<Annotation> getById(@PathVariable int id) {
+        if (xmlRepo.findById(id).isEmpty()) throw new ResponseStatusException(HttpStatusCode.valueOf(404));
+        return xmlRepo.findById(id).get().getAnnotations();
+    }
+
+    @GetMapping("/")
+    @CrossOrigin("*")
+    public @ResponseBody Iterable<annotationWithForeignKey> get() {
+        List<annotationWithForeignKey> annotationWithForeignKeys = new ArrayList<>();
+        List<Annotation> annotations = (List<Annotation>) annoRepository.findAll();
+
+        for (Annotation i : annotations) {
+            annotationWithForeignKey temp = new annotationWithForeignKey();
+            temp.xmlId = i.getXml().getId();
+            temp.xmlName = i.getXml().getFilepath();
+            temp.annotation = i;
+            annotationWithForeignKeys.add(temp);
+        }
+        return annotationWithForeignKeys;
+    }
+
+    public static class annotationWithForeignKey {
+        public int xmlId;
+        public String xmlName;
+        public Annotation annotation;
     }
 
     public static class addAnnotation {
