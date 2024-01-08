@@ -9,7 +9,7 @@ public class Annotation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private XML xml;
 
