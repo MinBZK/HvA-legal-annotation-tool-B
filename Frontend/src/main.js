@@ -3,6 +3,7 @@ import App from "./App.vue";
 import HelloWorld from "./components/HelloWorld.vue";
 import XmlData from "./components/XmlData.vue";
 import IndexPage from "./components/IndexPage.vue";
+import XmlViewer from "./components/XmlViewer.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
   { path: "/index", name: "IndexPage", component: IndexPage },
   { path: "/xmldata", name: "XmlData", component: XmlData },
   { path: "/annotations", name: "AnnotationListVue", component: AnnotationListVue },
+  { path: "/xmlviewer", name: "XmlViewer", component: XmlViewer },
 ];
 
 const router = createRouter({

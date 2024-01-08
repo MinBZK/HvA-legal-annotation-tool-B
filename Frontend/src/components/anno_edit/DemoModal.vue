@@ -1,4 +1,5 @@
 <template>
+<div class="demo-modal">
   <div class="modal-container">
     <div class="modal-inner">
       <h1>Defineer {{ word }}</h1>
@@ -279,6 +280,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -387,23 +389,11 @@ export default {
 
 <style>
 .modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: lightseagreen;
+  width: 70%; /* Increase the width of the modal */
+  margin: auto; 
+  z-index: 1;
 }
-.modal-inner {
-  border: 2px solid #686868;
-  background-color: white;
-  border-radius: 0.5em;
-  padding: 2em;
-  margin: auto;
-}
+
 .row {
   align-items: center;
 }

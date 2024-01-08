@@ -83,7 +83,7 @@ export default {
      */
     viewXmlData(fileName) {
       console.log(`Clicked on file: ${fileName}`);
-      this.$router.push({ name: 'XmlData', params: { fileName } });
+      this.$router.push({ name: 'XmlViewer', params: { fileName } });
     },
 
     /**
