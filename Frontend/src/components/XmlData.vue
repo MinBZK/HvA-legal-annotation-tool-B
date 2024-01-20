@@ -39,10 +39,10 @@ export default {
     };
   },
   methods: {
-    async fetchXMLData() {
+    async fetchXMLData(fileName) {
       try {
         const response = await axios.get(
-          `${process.env.VUE_APP_SERVERROOT}/get-xml`,
+          `${process.env.VUE_APP_SERVERROOT}/get-xml?fileName=${fileName}`,
           { responseType: "text" }
         );
         this.xmlData = response.data;
@@ -121,7 +121,8 @@ export default {
     },
   },
   mounted() {
-    this.fetchXMLData();
+    const fileName = this.$route.query.fileName;
+    this.fetchXMLData(fileName);
   },
 };
 </script>
