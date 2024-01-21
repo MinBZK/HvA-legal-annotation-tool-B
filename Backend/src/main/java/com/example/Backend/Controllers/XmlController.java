@@ -1,5 +1,6 @@
 package com.example.Backend.Controllers;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import com.example.Backend.Services.Storage.FileSystemStorageService;
 import com.example.Backend.Services.Storage.StorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ public class XmlController {
 
     @GetMapping("/get-xml")
     @CrossOrigin("*")
-    public ResponseEntity<Resource> getXmlFile() {
+    public ResponseEntity<Resource> getXmlFile(@RequestParam String fileName) {
         try {
-            Path path = Paths.get(storageProperties.getLocation()).resolve("example.xml");
+            Path path = Paths.get(storageProperties.getLocation()).resolve(fileName);
             Resource resource = new UrlResource(path.toUri());
 
             if (resource.exists() || resource.isReadable()) {
