@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <UploadModal v-show="isModalVisible" @close="closeModal" />
     <div class="header-container d-flex align-items-center mb-3">
       <h2 class="h4 me-3 mr-2">Alle Bestanden</h2>
@@ -7,7 +7,7 @@
       <button type="button" class="btn btn-primary btn-sm mr-2" @click="showModal">
         Upload een andere wet
       </button>
-      <button @click="exportAllFiles" class="btn btn-dark btn-sm mr-2">Alles exporteren</button>
+      <button @click="exportAllFiles" class="btn btn-light btn-sm mr-2">Alles exporteren</button>
       <button @click="reloadFiles" class="btn btn-success btn-sm mr-2">Herladen</button>
     </div>
 
@@ -24,8 +24,8 @@
           <td><input type="checkbox" class="form-check-input" /></td>
           <td>{{ getFileNameWithoutExtension(fileName) }}</td>
           <td>
-            <button @click="viewXmlData(fileName)" class="btn btn-primary mr-2">Bekijk tekst</button>
-            <button class="btn btn-dark mr-2">Exporteer</button>
+            <button @click="viewXmlData(fileName)" class=" global-button mr-2">Bekijk tekst</button>
+            <button class=" mr-2 global-button">Exporteer</button>
           </td>
         </tr>
       </tbody>
@@ -103,4 +103,20 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  background-color: #343a40;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+
+.table thead th {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+
+</style>
