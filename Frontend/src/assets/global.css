@@ -1,0 +1,29 @@
+button {
+    height: 50px;
+    width: 175px;
+    border-radius: 15px;
+    border: 2px solid #cccccc;
+  }
+
+.global-button {
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.global-button:hover {
+    transform: translateY(-2px);
+}
+
+.global-button:active {
+    transform: translateY(1px);
+    box-shadow: inset 6px 6px 16px #bbb,
+    inset -6px -6px 16px #fff;
+}

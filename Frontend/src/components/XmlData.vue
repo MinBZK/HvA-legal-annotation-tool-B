@@ -1,31 +1,22 @@
 <template>
+  <div class="xml-data">
+
   <div class="xml-container">
     <h2>Wet tekst annotatie:</h2>
     <pre>
       <p @click="callThing">
       {{ xmlData }}</p>
     </pre>
-    <button class="terug-button">terug</button>
+    <button class="global-button my-2" @click="redirectToIndexPage">Opslaan</button>
   </div>
-  <DemoModal
-    ref="DemoModal"
-    v-show="isEditing"
-    @close="closeModal"
-    :word="word"
-    :startIndex="startIndex"
-    :endIndex="endIndex"
-    :xmlId="xmlId"
-    :existingDescription="existingDescription"
-  />
+  </div>
 </template>
 
 <script>
 import axios from "axios";
-import DemoModal from "./anno_edit/DemoModal.vue";
 
 export default {
   components: {
-    DemoModal,
   },
   data() {
     return {
@@ -51,6 +42,7 @@ export default {
       }
     },
     async callThing() {
+      
       console.log("called");
       let s = window.getSelection();
       var range = s.getRangeAt(0);
@@ -87,6 +79,12 @@ export default {
         this.$refs.DemoModal.fillData(result);
       }
       this.showModal();
+      this.$emit('word-clicked', {
+        word: this.word,
+        startIndex: this.startIndex,
+        endIndex: this.endIndex,
+        xmlId: this.xmlId
+      });
     },
     showModal() {
       this.isEditing = true;
@@ -119,6 +117,9 @@ export default {
           }
         });
     },
+    redirectToIndexPage() {
+      this.$router.push({ name: 'IndexPage' });
+    }
   },
   mounted() {
     this.fetchXMLData();
@@ -126,43 +127,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .xml-container {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  background-color: #f2f2f2; /* Updated to gray background */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 h2 {
-  color: #333;
+  color: #ffffff;
   font-family: Arial, sans-serif;
 }
 
 pre {
-  background-color: #efefef;
-  border: 1px solid #ddd;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
   padding: 15px;
   border-radius: 4px;
   overflow-x: auto;
   white-space: pre-wrap;
 }
 
-.terug-button {
-  background-color: #ff0000; /* Red background */
-  color: #ffffff; /* White text */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
-  margin-left: 2300px;
-}
-
-.terug-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-}
 </style>

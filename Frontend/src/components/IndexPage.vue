@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <UploadModal v-show="isModalVisible" @close="closeModal" />
     <div class="header-container d-flex align-items-center mb-3">
       <h2 class="h4 me-3 mr-2">Alle Bestanden</h2>
@@ -7,7 +7,7 @@
       <button type="button" class="btn btn-primary btn-sm mr-2" @click="showModal">
         Upload een andere wet
       </button>
-      <button @click="exportAllFiles" class="btn btn-dark btn-sm mr-2">Alles exporteren</button>
+      <button @click="exportAllFiles" class="btn btn-light btn-sm mr-2">Alles exporteren</button>
       <button @click="reloadFiles" class="btn btn-success btn-sm mr-2">Herladen</button>
     </div>
 
@@ -21,11 +21,11 @@
       </thead>
       <tbody>
         <tr v-for="(fileName, index) in filteredFiles" :key="index">
-          <td><input type="checkbox" v-model="selectedFiles" :value="file" class="form-check-input" /></td>
+          <td><input type="checkbox" class="form-check-input" /></td>
           <td>{{ getFileNameWithoutExtension(fileName) }}</td>
           <td>
-            <button @click="viewXmlData(fileName)" class="btn btn-primary mr-2">Bekijk tekst</button>
-            <button class="btn btn-dark mr-2">Exporteer</button>
+            <button @click="viewXmlData(fileName)" class=" global-button mr-2">Bekijk tekst</button>
+            <button class=" mr-2 global-button">Exporteer</button>
           </td>
         </tr>
       </tbody>
@@ -35,17 +35,17 @@
 
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+
 export default {
   data() {
     return {
       xmlFiles: [],
-      files: [],
-      selectedFiles: [],
       search: "",
     };
   },
   computed: {
+    // filters XML files based on search query
     filteredFiles() {
       return this.xmlFiles.filter((fileName) =>
         fileName !== '.gitkeep' && fileName.toLowerCase().includes(this.search.toLowerCase())
@@ -58,12 +58,17 @@ export default {
   },
 
   methods: {
-
-
+    /**
+     * log the view action for a specific file.
+     */
     viewText(file) {
       console.log(`View text for file: ${file.name}`);
     },
 
+    /**
+     * fetch XML files from the backend using an HTTP GET request.
+     * handles the response and updates the component's xmlFiles data.
+     */
     async fetchXmlFiles() {
       try {
         const response = await axios.get('http://localhost:8080/get-xmls');
@@ -73,15 +78,24 @@ export default {
       }
     },
 
+    /**
+     * navigate to the 'XmlData' route to view details of a specific XML file.
+     */
     viewXmlData(fileName) {
       console.log(`Clicked on file: ${fileName}`);
-      this.$router.push({ name: 'XmlData', params: { fileName } });
+      this.$router.push({ name: 'XmlViewer', params: { fileName } });
     },
 
+    /**
+     * reload XML files by calling the fetchXmlFiles method.
+     */
     async reloadFiles() {
       await this.fetchXmlFiles();
     },
 
+    /**
+     * remove the file extension from the provided fileName.
+     */
     getFileNameWithoutExtension(fileName) {
       return fileName.replace(/\.[^/.]+$/, "");
     },
@@ -89,4 +103,20 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  background-color: #343a40;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+
+.table thead th {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+
+</style>

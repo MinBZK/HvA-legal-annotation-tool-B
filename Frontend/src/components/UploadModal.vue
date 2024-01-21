@@ -3,7 +3,7 @@
     <div class="modalCustom">
       <header class="modal-headerCustom">
         <slot name="headerCustom"> Upload een XML </slot>
-        <button type="button" class="btn-close" @click="close"></button>
+        <button type="button" class="btn-close" @click="close">close</button>
       </header>
 
       <section class="modal-bodyCustom">
@@ -14,7 +14,7 @@
 
       <footer class="modal-footerCustom">
         <slot name="footerCustom" id="feedback">{{feedback}}</slot>
-        <button type="button" class="btn btn-primary" @click="submitFile">
+        <button type="button" class="global-button" @click="submitFile">
           Upload
         </button>
       </footer>
@@ -68,7 +68,7 @@ export default {
 }
 
 .modalCustom {
-  background: #ffffff;
+  background: #dcdede;
   box-shadow: 2px 2px 20px 1px;
   overflow-x: auto;
   display: flex;
@@ -84,7 +84,7 @@ export default {
 .modal-headerCustom {
   position: relative;
   border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
+  color: #000000;
   justify-content: space-between;
 }
 
@@ -99,7 +99,14 @@ export default {
   padding: 20px 10px;
 }
 
-.btn-closeCustom {
+button {
+  height: 50px;
+  width: 175px;
+  border-radius: 15px;
+  border: 2px solid #cccccc;
+}
+
+.btn-close {
   position: absolute;
   top: 0;
   right: 0;
@@ -108,7 +115,7 @@ export default {
   padding: 10px;
   cursor: pointer;
   font-weight: bold;
-  color: #4aae9b;
+  color: #000000;
   background: transparent;
 }
 
