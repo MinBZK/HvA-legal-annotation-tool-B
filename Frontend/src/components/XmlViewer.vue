@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <XmlData class="xml-data" @word-clicked="handleWordClicked"/>
     <DemoModal
       class="demo-modal"
@@ -44,19 +44,18 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.container-fluid {
+  background-color: #343a40;
   display: flex;
-  /* Adjust the container height as needed, or remove if not needed */
-  height: 100vh;
+  height: auto;
 }
 
 .xml-data, .demo-modal {
   flex: 1;
 }
 
-/* Optional: Add additional responsive design rules as necessary */
 @media (max-width: 768px) {
-  .container {
+  .container-fluid {
     flex-direction: column;
   }
 }
