@@ -1,4 +1,5 @@
 <template>
+<div class="demo-modal">
   <div class="modal-container">
     <div class="modal-inner">
       <h1>Defineer {{ word }}</h1>
@@ -311,6 +312,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -562,24 +564,36 @@ export default {
 };
 </script>
 
-<style>
-.modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: lightseagreen;
+<style scoped>
+.modal-container,
+.modal-container h1,
+.modal-container h3,
+.modal-container label,
+.modal-container .save-message,
+.modal-container .submit-btn,
+.modal-container .close-btn {
+  color: #ffffff;
 }
-.modal-inner {
-  border: 2px solid #686868;
-  background-color: white;
-  border-radius: 0.5em;
-  padding: 2em;
-  margin: auto;
+
+button {
+  height: 50px;
+  width: 175px;
+  border-radius: 15px;
+  border: 2px solid #cccccc;
+  background-color: #596db8;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.close-btn {
+  background-color: #ff0404fa;
+  color: #ffffff;
+  font-size: 20px;
+}
+.modal-container {
+  width: 70%; 
+  margin: auto; 
+  z-index: 1;
 }
 .row {
   align-items: center;

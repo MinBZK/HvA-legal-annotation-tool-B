@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <UploadModal v-show="isModalVisible" @close="closeModal" />
     <div class="header-container d-flex align-items-center mb-3">
       <h2 class="h4 me-3 mr-2">Alle annotaties</h2>
@@ -76,4 +76,12 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container-fluid {
+  height: 100vh;
+  background-color: #343a40;
+  color: #f8f9fa;
+  font-family: 'Roboto', sans-serif;
+}
+
+</style>
