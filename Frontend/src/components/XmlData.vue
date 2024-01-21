@@ -33,10 +33,11 @@ export default {
     async fetchXMLData(fileName) {
       try {
         const response = await axios.get(
-          `${process.env.VUE_APP_SERVERROOT}/get-xml?fileName=${fileName}`,
-          { responseType: "text" }
+          `${process.env.VUE_APP_SERVERROOT}/get-xml?fileName=${fileName}`
         );
-        this.xmlData = response.data;
+        console.log(response.data);
+        this.xmlData = response.data.text;
+        this.xmlId = response.data.id;
       } catch (error) {
         console.error("Error fetching XML data", error);
       }
@@ -68,7 +69,6 @@ export default {
       this.word = str;
       this.startIndex = range.startOffset;
       this.endIndex = range.endOffset;
-      this.xmlId = 1;
       let result = await this.getInfoOfWords(
         this.xmlId,
         this.startIndex,
@@ -76,7 +76,7 @@ export default {
         this.word
       );
       if (result != null) {
-        this.$refs.DemoModal.fillData(result);
+        this.$emit('fill-data', result);
       }
       this.showModal();
       this.$emit('word-clicked', {

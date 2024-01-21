@@ -11,7 +11,7 @@
               type="radio"
               name="anno_types"
               value="RechtsSubject"
-              id="radiotype1"
+              id="RechtsSubject"
             />
             <label class="type1" for="type1">Rechtssubject</label>
           </li>
@@ -19,7 +19,7 @@
             <input
               type="radio"
               name="anno_types"
-              id="type2"
+              id="RechtsBetrekking"
               value="RechtsBetrekking"
               @change="CheckBoxes($event)"
             />
@@ -29,7 +29,7 @@
             <input
               type="radio"
               name="anno_types"
-              id="type3"
+              id="RechtsWaarde"
               value="RechtsWaarde"
             />
             <label class="type3" for="type3">Rechtswaarde</label>
@@ -38,7 +38,7 @@
             <input
               type="radio"
               name="anno_types"
-              id="type4"
+              id="RechtsFeit"
               value="RechtsFeit"
               @change="CheckBoxes($event)"
             />
@@ -48,7 +48,7 @@
             <input
               type="radio"
               name="anno_types"
-              id="type5"
+              id="Voorwaarde"
               value="Voorwaarde"
             />
             <label class="type5" for="type5">Voorwaarde</label>
@@ -57,7 +57,7 @@
             <input
               type="radio"
               name="anno_types"
-              id="type6"
+              id="AfleidingsRegel"
               value="AfleidingsRegel"
               @change="CheckBoxes($event)"
             />
@@ -539,6 +539,7 @@ export default {
       console.log(data);
       this.description = data["description"];
       this.multi = data["startIndex"] == null ? "yes" : "no";
+      document.getElementById(data["type"]).checked = true;
       if ("relatedAnnotations" in data) {
         let relations = data["relatedAnnotations"];
         let addedType = [];
