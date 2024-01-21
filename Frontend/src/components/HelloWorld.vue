@@ -1,21 +1,25 @@
 <template>
-  <div style="width: 100%; overflow: hidden; padding-left: 5%;">
-    <div style="width: 50%; float:left;">
-      <h3>Annotation tools</h3>
-      <p>
-        Dit is een annotatie tool voor het toevoegen van annotaties aan
-        specifieke wetteksten, voeg een XML bestand toe om verder te gaan
-      </p>
+  <div class="container-fluid homepage">
+    <div class="row">
+      <div class="col-12 text-center mt-5">
+        <h3>Annotation tools</h3>
+        <p>
+          Dit is een annotatie tool voor het toevoegen van annotaties aan
+          specifieke wetteksten, voeg een XML bestand toe om verder te gaan.
+        </p>
+      </div>
     </div>
-    <div style="width: 40%; overflow: hidden; text-align: center; justify-content: center; height: 100%;">
-      <button type="button" class="btn btn-primary" @click="showModal">
-        <font-awesome-icon icon="fa-solid fa-folder" /> Upload een nieuwe wet
-      </button>
-        <button @click="redirectToXmlData">View XML Data</button>
-      <button @click="redirectToEditXML">Edit XML Data</button>
-      <button @click="redirectToIndexPage">All files</button>
-      <button @click="redirectToAnnotationList">All annotations</button>
-
+    <div class="row">
+      <div class="col-12 d-flex flex-column align-items-center">
+        <div class="button-container">
+          <button type="button" class="global-button my-2" @click="showModal">
+            Upload XML
+          </button>
+          <button class="global-button my-2" @click="redirectToXmlData">View XML Data</button>
+          <button class="global-button my-2" @click="redirectToIndexPage">All files</button>
+          <button class="global-button my-2" @click="redirectToAnnotationList">All annotations</button>
+        </div>
+      </div>
     </div>
   </div>
   <UploadModal v-show="isModalVisible" @close="closeModal" />
@@ -42,14 +46,11 @@ export default {
     redirectToXmlData() {
       this.$router.push({ name: 'XmlData' });
     },
-    redirectToEditXML(){
-      this.$router.push({name: 'DemoModal'});
+    redirectToIndexPage() {
+      this.$router.push({ name: 'IndexPage' });
     },
-    redirectToIndexPage(){
-      this.$router.push({name: 'IndexPage'});
-    },
-    redirectToAnnotationList(){
-      this.$router.push({name: "AnnotationListVue"})
+    redirectToAnnotationList() {
+      this.$router.push({ name: "AnnotationListVue" })
     }
   },
   data() {
@@ -60,21 +61,34 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+
 a {
   color: #42b983;
+}
+
+.homepage {
+  height: 100vh;
+  background-color: #343a40;
+  color: #f8f9fa;
+  font-family: 'Roboto', sans-serif;
+}
+
+h3 {
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.25rem;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-backdrop {
@@ -87,5 +101,4 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-</style>
+}</style>
