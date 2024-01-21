@@ -7,7 +7,7 @@
       <p @click="callThing">
       {{ xmlData }}</p>
     </pre>
-    <button class="terug-button">terug</button>
+    <button class="global-button my-2" @click="redirectToIndexPage">Opslaan</button>
   </div>
   </div>
 </template>
@@ -117,6 +117,9 @@ export default {
           }
         });
     },
+    redirectToIndexPage() {
+      this.$router.push({ name: 'IndexPage' });
+    }
   },
   mounted() {
     this.fetchXMLData();
@@ -126,26 +129,22 @@ export default {
 
 <style scoped>
 .xml-container {
-  max-width: 100%; /* Ensure it doesn't overflow the screen */
-  box-sizing: border-box; /* Include padding and border in width */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 h2 {
-  color: #333;
+  color: #ffffff;
   font-family: Arial, sans-serif;
 }
 
 pre {
-  background-color: #efefef;
-  border: 1px solid #ddd;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
   padding: 15px;
   border-radius: 4px;
   overflow-x: auto;
   white-space: pre-wrap;
 }
 
-
-.terug-button:hover {
-  background-color: #cc0000; 
-}
 </style>
