@@ -24,8 +24,8 @@
         <td><input type="checkbox" v-model="selectedFiles" :value="file" class="form-check-input"/></td>
         <td>{{ getFileNameWithoutExtension(fileName) }}</td>
         <td>
-          <button @click="viewXmlData(fileName)" class="btn btn-primary mr-2">Bekijk tekst</button>
-          <button @click="generateXml(fileName)" class="btn btn-dark mr-2">Exporteer</button>
+          <button @click="viewXmlData(fileName)" class="global-button mr-2">Bekijk tekst</button>
+          <button @click="generateXml(fileName)" class="global-button mr-2">Exporteer</button>
         </td>
       </tr>
       </tbody>
@@ -80,7 +80,7 @@ export default {
      */
     viewXmlData(fileName) {
       console.log(`Clicked on file: ${fileName}`);
-      this.$router.push({name: 'XmlData', query: {fileName: fileName}});
+      this.$router.push({name: 'XmlViewer', query: {fileName: fileName}});
     },
     async exportAllFiles() {
       const response = await axios.get('http://localhost:8080/get-xmls');
