@@ -8,8 +8,9 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col"></th>
-          <th scope="col" class="h6">Title</th>
+          <th scope="col">Annotatie</th>
+          <th scope="col">Beschrijving</th>
+          <th scope="col">Document</th>
           <th scope="col"></th>
         </tr>
       </thead>

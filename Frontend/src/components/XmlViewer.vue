@@ -1,9 +1,10 @@
 <template>
   <div class="container-fluid">
-    <XmlData class="xml-data" @word-clicked="handleWordClicked"/>
+    <XmlData class="xml-data" @word-clicked="handleWordClicked" @fill-data="handleFillData"/>
     <DemoModal
       class="demo-modal"
-      v-if="isEditing"
+      ref="DemoModal"
+      v-show="isEditing"
       @close="isEditing = false"
       :word="selectedWord"
       :startIndex="startIndex"
@@ -38,7 +39,14 @@ export default {
       this.endIndex = detail.endIndex;
       this.xmlId = detail.xmlId;
       this.isEditing = true;
+    },
+    handleFillData(detail) {
+      console.log("fillledi");
+      console.log(this.$refs);
+      this.$refs.DemoModal.fillData(detail);
     }
+  },
+  mounted() {
   }
 };
 </script>

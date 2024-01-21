@@ -1,0 +1,6 @@
+/xmls
+.gitignore
+.dockerignore
+Dockerfile
+/dist
+/target
